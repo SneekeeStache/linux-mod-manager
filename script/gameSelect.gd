@@ -26,13 +26,14 @@ func _ready():
 
 
 func _button_pressed(name):
+	print(Gamelist.games[name]["path"])
 	if(Gamelist.games[name]["path"]==null):
 		var OkPopUP= AcceptDialog.new()
 		get_tree().get_current_scene().add_child(OkPopUP)
 		OkPopUP.popup_centered()
 		OkPopUP.rect_position=Vector2(44,216)
 		OkPopUP.popup_exclusive=true
-		OkPopUP.dialog_text="selectioner le dossier du jeu "+name
+		OkPopUP.dialog_text="please seelect the folder of "+name
 		OkPopUP.connect("confirmed",self,"okPopFunc",[OkPopUP,name])
 		
 
@@ -55,13 +56,15 @@ func okPopFunc(OkPopUp,name):
 func locationSelected(path,name):
 	var popUpMissing=AcceptDialog.new()
 	get_tree().get_current_scene().add_child(popUpMissing)
-	Gamelist.games[name]["path"]=path
 	popUpMissing.connect("confirmed",self,"closeMissing",[popUpMissing])
 	if(name=="Xcom 2"):
 		var directory=Directory.new()
 		var file=File.new()
 		if(directory.dir_exists(path+"/XComGame/Mods")):
+			print("test")
 			if(file.file_exists(path+"/XComGame/Config/DefaultModOptions.ini")):
+				print("test2")
+				Gamelist.games[name]["path"]=path
 				Gamelist.games[name]["modPath"]= path+"/XComGame/Mods"
 				Gamelist.games[name]["modListPath"]= path+"/XComGame/Config/DefaultModOptions.ini"
 				Gamelist.saveList()

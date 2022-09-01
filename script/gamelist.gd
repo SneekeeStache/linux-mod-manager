@@ -1,7 +1,7 @@
 extends Node
 
 var games={
-	"xcom2":{
+	"Xcom 2":{
 		"icon":"res://icons/xcom2.png",
 		"path":null,
 		"modPath":null,

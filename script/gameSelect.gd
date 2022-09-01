@@ -23,7 +23,18 @@ func _ready():
 func _button_pressed(name):
 	if(Gamelist.games[name]["path"]==null):
 		var fileBrowser= FileDialog.new()
+		get_tree().get_current_scene().add_child(fileBrowser)
+		fileBrowser.visible=true
+		fileBrowser.rect_size=Vector2(800,500)
+		fileBrowser.access=2
+		fileBrowser.mode=2
+		OS.set_window_size(Vector2(800,500))
+		fileBrowser.connect("dir_selected",self,"locationSelected",[name])
 
 func _process(delta):
 	for i in vbox.get_children():
 		i.set_size(Vector2(300,100))
+
+func locationSelected(path,name):
+	Gamelist.games[name]["path"]=path
+	print(Gamelist.games[name]["path"])

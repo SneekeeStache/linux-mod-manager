@@ -1,15 +1,32 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://gameSelect.gd" type="Script" id=1]
+[ext_resource path="res://script/gameSelect.gd" type="Script" id=1]
+[ext_resource path="res://font/monofonto rg.otf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 33
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 2 )
+
+[sub_resource type="Theme" id=3]
+default_font = SubResource( 2 )
+Button/fonts/font = SubResource( 1 )
 
 [node name="gameSelect" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = SubResource( 3 )
 script = ExtResource( 1 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
-margin_right = 388.0
-margin_bottom = 486.0
+margin_left = 44.0
+margin_top = 42.0
+margin_right = 432.0
+margin_bottom = 528.0
+follow_focus = true
 scroll_horizontal_enabled = false
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+alignment = 1

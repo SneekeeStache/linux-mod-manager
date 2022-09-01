@@ -18,6 +18,11 @@ config/icon="res://icon.png"
 
 Gamelist="*res://script/gamelist.gd"
 
+[display]
+
+window/size/width=388
+window/size/height=486
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true

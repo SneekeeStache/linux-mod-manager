@@ -18,23 +18,66 @@ func _ready():
 		gameButton.connect("pressed",self,"_button_pressed",[i])
 		gameButton.text=i
 		gameButton.ALIGN_RIGHT
+	if(Gamelist.loadList()):
+		print("loaded")
+	else:
+		print("not loaded")
+	
 
 
 func _button_pressed(name):
 	if(Gamelist.games[name]["path"]==null):
-		var fileBrowser= FileDialog.new()
-		get_tree().get_current_scene().add_child(fileBrowser)
-		fileBrowser.visible=true
-		fileBrowser.rect_size=Vector2(800,500)
-		fileBrowser.access=2
-		fileBrowser.mode=2
-		OS.set_window_size(Vector2(800,500))
-		fileBrowser.connect("dir_selected",self,"locationSelected",[name])
+		var OkPopUP= AcceptDialog.new()
+		get_tree().get_current_scene().add_child(OkPopUP)
+		OkPopUP.popup_centered()
+		OkPopUP.rect_position=Vector2(44,216)
+		OkPopUP.popup_exclusive=true
+		OkPopUP.dialog_text="selectioner le dossier du jeu "+name
+		OkPopUP.connect("confirmed",self,"okPopFunc",[OkPopUP,name])
+		
 
 func _process(delta):
 	for i in vbox.get_children():
 		i.set_size(Vector2(300,100))
 
+func okPopFunc(OkPopUp,name):
+	OkPopUp.queue_free()
+	OS.set_window_size(Vector2(800,500))
+	var fileBrowser= FileDialog.new()
+	get_tree().get_current_scene().add_child(fileBrowser)
+	fileBrowser.visible=true
+	fileBrowser.rect_size=Vector2(800,500)
+	fileBrowser.access=2
+	fileBrowser.mode=2
+	fileBrowser.connect("dir_selected",self,"locationSelected",[name])
+	fileBrowser.connect("hide",self,"closePopUp",[fileBrowser])
+	
 func locationSelected(path,name):
+	var popUpMissing=AcceptDialog.new()
+	get_tree().get_current_scene().add_child(popUpMissing)
 	Gamelist.games[name]["path"]=path
-	print(Gamelist.games[name]["path"])
+	popUpMissing.connect("confirmed",self,"closeMissing",[popUpMissing])
+	if(name=="Xcom 2"):
+		var directory=Directory.new()
+		var file=File.new()
+		if(directory.dir_exists(path+"/XComGame/Mods")):
+			if(file.file_exists(path+"/XComGame/Config/DefaultModOptions.ini")):
+				Gamelist.games[name]["modPath"]= path+"/XComGame/Mods"
+				Gamelist.games[name]["modListPath"]= path+"/XComGame/Config/DefaultModOptions.ini"
+				Gamelist.saveList()
+				
+			else:
+				popUpMissing.dialog_text="Missing Mods Folder"
+				popUpMissing.popup_centered()
+				popUpMissing.rect_position=Vector2(44,216)
+		else:
+			popUpMissing.dialog_text="Missing mod config file"
+			popUpMissing.popup_centered()
+			popUpMissing.rect_position=Vector2(44,216)
+		
+func closePopUp(fileBrowserPop):
+	fileBrowserPop.queue_free()
+	OS.set_window_size(Vector2(388,486))
+	
+func closeMissing(MissingPop):
+	MissingPop.queue_free()

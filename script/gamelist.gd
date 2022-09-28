@@ -6,7 +6,9 @@ var games={
 		"icon":"res://icons/xcom2.png",
 		"path":null,
 		"modPath":null,
-		"modListPath":null
+		"modListPath":null,
+		"modPathWOTC":null,
+		"modListPathWOTC":null
 	}
 }
 var data

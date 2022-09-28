@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://script/xcom2.gd" type="Script" id=1]
+
+[node name="xcom2" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="TabContainer" type="TabContainer" parent="."]
+margin_right = 1000.0
+margin_bottom = 600.0
+tab_align = 0
+
+[node name="Xcom 2" type="Tabs" parent="TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Xcom 2"]
+margin_left = 23.0
+margin_top = 18.0
+margin_right = 398.0
+margin_bottom = 540.0
+
+[node name="xcom 2 list" type="VBoxContainer" parent="TabContainer/Xcom 2/ScrollContainer"]
+unique_name_in_owner = true
+
+[node name="Xcom 2 WOTC" type="Tabs" parent="TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="xcom 2 WOTC list" type="VBoxContainer" parent="TabContainer/Xcom 2 WOTC"]
+unique_name_in_owner = true
+margin_left = 12.0
+margin_top = 6.0
+margin_right = 361.0
+margin_bottom = 557.0

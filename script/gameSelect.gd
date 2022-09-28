@@ -35,6 +35,8 @@ func _button_pressed(name):
 		OkPopUP.popup_exclusive=true
 		OkPopUP.dialog_text="please select the folder of "+name
 		OkPopUP.connect("confirmed",self,"okPopFunc",[OkPopUP,name])
+	else:
+		get_tree().change_scene("res://scene/xcom2.tscn")
 		
 
 func _process(delta):
@@ -61,7 +63,7 @@ func locationSelected(path,name):
 		"Xcom 2":
 			var directory=Directory.new()
 			var file=File.new()
-			if(Gamelist.games[name]["path"]==null || Gamelist.games[name]["modPath"] || Gamelist.games[name]["modListPath"]):
+			if(Gamelist.games[name]["path"]==null or Gamelist.games[name]["modPath"]==null or Gamelist.games[name]["modListPath"]==null ):
 				if(directory.dir_exists(path+"/XComGame/Mods")):
 					print("test")
 					if(file.file_exists(path+"/XComGame/Config/DefaultModOptions.ini")):
@@ -105,7 +107,8 @@ func locationSelected(path,name):
 					popUpMissing.popup_centered()
 					popUpMissing.rect_position=Vector2(44,216)
 			else:
-				pass
+				print("test")
+				get_tree().change_scene("res://scene/xcom2.tscn")
 		
 func closePopUp(fileBrowserPop):
 	fileBrowserPop.queue_free()
@@ -116,3 +119,4 @@ func closeMissing(MissingPop):
 	
 func closeMissingWOTC():
 	Gamelist.saveList()
+	get_tree().change_scene("res://scene/xcom2.tscn")
